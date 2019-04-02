@@ -18,8 +18,6 @@ def f(arg):
     print(i)
     return res
 
-
-
 def reverse_sequence_mutation(p):
     a = np.random.choice(len(p), 2, False)
     i, j = a.min(), a.max()
@@ -34,11 +32,7 @@ def rand_mutation(p):
     q[j] = p[i]
     return q
 
-def tsp_objective_function(p):
-    s = 0.0
-    for i in range(n):
-        s += A[p[i-1], p[i]]
-    return s
+
 
 def tsp_objective_function_2(p, data, n):
     s = 0.0
