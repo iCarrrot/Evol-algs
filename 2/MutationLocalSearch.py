@@ -3,7 +3,7 @@ import itertools
 
 
 def mutation_local_search(P, f_target, K=3, verbose=False, **kwargs):
-    print('PING')
+    # print('PING')
     def perms(comb):
         where_changing = np.array(comb)
         it = (

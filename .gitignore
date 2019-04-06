@@ -106,4 +106,8 @@ AE2018*
 data/*
 .vscode
 lecture*
-lista*
+lista**output*
+output*
+untitled*
+Untitled*
+data*

@@ -1,7 +1,8 @@
 import numpy as np
 
 
-def bayg29():
+def bayg29(opt=False):
+    loss = 1610.0
     dists_txt = '''97 205 139  86  60 220  65 111 115 227  95  82 225 168 103 266 205 149 120  58 257 152  52 180 136  82  34 145
     129 103  71 105 258 154 112  65 204 150  87 176 137 142 204 148 148  49  41 211 226 116 197  89 153 124  74
     219 125 175 386 269 134 184 313 201 215 267 248 271 274 236 272 160 151 300 350 239 322  78 276 220  60
@@ -36,10 +37,13 @@ def bayg29():
     A[np.triu_indices(n, k=1)] = np.array([float(x)
                                            for x in dists_txt.split()])
     A += A.T
-    return A, n
+    if not opt:
+        return A, n
+    return A, n, loss
 
 
-def bays29():
+def bays29(opt=False):
+    loss = 2020.
     dists_txt = '''0 107 241 190 124  80 316  76 152 157 283 133 113 297 228 129 348 276 188 150  65 341 184  67 221 169 108  45 167
     107   0 148 137  88 127 336 183 134  95 254 180 101 234 175 176 265 199 182  67  42 278 271 146 251 105 191 139  79
     241 148   0 374 171 259 509 317 217 232 491 312 280 391 412 349 422 356 355 204 182 435 417 292 424 116 337 273  77
@@ -72,10 +76,13 @@ def bays29():
 
     n = 29
     A = np.fromstring(dists_txt, sep=' ').reshape((n, n))
-    return A, n
+    if not opt:
+        return A, n
+    return A, n, loss
 
 
-def kroA100():
+def kroA100(opt=False):
+    loss = 21285.44318157108
     coords_txt = '''1380 939
     2848 96
     3510 1671
@@ -185,10 +192,13 @@ def kroA100():
     for i in range(n):
         for j in range(n):
             A[i, j] = np.sqrt(((coords[i, :] - coords[j, :])**2).sum())
-    return A, n
+    if not opt:
+        return A, n
+    return A, n, loss
 
 
-def kroA150():
+def kroA150(opt=False):
+    loss = 26524
     coords_txt = '''1380 939
     2848 96
     3510 1671
@@ -348,10 +358,13 @@ def kroA150():
     for i in range(n):
         for j in range(n):
             A[i, j] = np.sqrt(((coords[i, :] - coords[j, :])**2).sum())
-    return A, n
+    if not opt:
+        return A, n
+    return A, n, loss
 
 
-def kroA200():
+def kroA200(opt=False):
+    loss = 29368
     coords_txt = '''1357 1905
     2650 802
     1774 107
@@ -562,10 +575,13 @@ def kroA200():
     for i in range(n):
         for j in range(n):
             A[i, j] = np.sqrt(((coords[i, :] - coords[j, :])**2).sum())
-    return A, n
+    if not opt:
+        return A, n
+    return A, n, loss
 
 
-def berlin52():
+def berlin52(opt=False):
+    loss = 7544.365901904087
     n = 52
 
     coords = np.array([565.0, 575.0, 25.0, 185.0, 345.0, 750.0, 945.0, 685.0,
@@ -602,4 +618,6 @@ def berlin52():
         for j in range(n):
             A[i, j] = np.sqrt(((coords[i, :] - coords[j, :])**2).sum())
 
-    return A, n
+    if not opt:
+        return A, n
+    return A, n, loss

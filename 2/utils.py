@@ -40,13 +40,30 @@ def tsp_objective_function_2(p, data, n):
         s += data[p[i-1], p[i]]
     return s
 
-def plot_scores(**kwargs):
+def plot_scores(tries=10, barplot=True, file=False, filename='', **kwargs):
     t0 = time.time()
-    best, costs = SGA(**kwargs)
-    print(kwargs['title'], best, time.time() - t0)
+    bests = []
+    costss = []
+    for i in range(tries):
+        t1 = time.time()
+        best, costs = SGA(**kwargs)
+        print(f'Próba {i}; wynik: {best}, czas: {time.time() - t1}')
+        if file:
+            with open("output"+filename, "a") as f:
+                f.write(f'Próba {i}; wynik: {best}, czas: {time.time() - t1}\n')
+                
+        bests.append(best)
+        costss.append(costs)
+    costs = costss[np.argmin(bests)]
     x, y = costs.shape
     plt.figure(figsize=(15,5))
     plt.plot(range(x), costs.min(axis=1))
     plt.plot(range(x), costs.max(axis=1))
     plt.plot(range(x), costs.mean(axis=1))
     plt.show()
+        
+    print(kwargs['title'], min(bests), time.time() - t0)
+
+    if barplot:
+        plt.hist(bests)
+        plt.show()
