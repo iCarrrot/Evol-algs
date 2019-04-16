@@ -33,6 +33,7 @@ def plot_scores(ev_func, tries=10, barplot=True, file=False, filename='', title=
     x, y = costs.shape
     plt.figure(figsize=(15, 5))
     plt.title(title)
+    plt.scatter([np.argmin(costs.min(axis=1))], [np.min(costs)])
     plt.plot(range(x), costs.min(axis=1))
     plt.plot(range(x), costs.max(axis=1))
     plt.plot(range(x), costs.mean(axis=1))
