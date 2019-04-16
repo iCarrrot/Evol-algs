@@ -29,8 +29,13 @@ def mutation(Pc, tau, tau0, d, **kwargs):
     return Pc
 
 
+def replacement(pop, scores, mi):
+    chosen = np.argsort(scores)[:mi]
+    return pop[chosen], scores[chosen]
+
+
 def ES(mi, Lambda, d, population_evaluation, number_of_iterations, K, plus=True, domain=(0, 1), **kwargs):
-    history = np.zeros((number_of_iterations, mi + Lambda if plus else Lambda))
+    history = np.zeros((number_of_iterations, mi))
     sigma_history = np.zeros((number_of_iterations, d))
     tau = K/np.sqrt(2*d)
     tau0 = K/np.sqrt(2*np.sqrt(d))
@@ -43,11 +48,12 @@ def ES(mi, Lambda, d, population_evaluation, number_of_iterations, K, plus=True,
         Pc = parent_selection(P, Lambda, scores, i)
         Pc = mutation(Pc, tau, tau0, d)
         if plus:
-            P = np.vstack((parent_selection(P, mi, scores, i), Pc))
+            P, scores = replacement(np.vstack((P, Pc)),
+                                    np.hstack(
+                                        (scores, population_evaluation(Pc[:, :d]))),
+                                    mi)
         else:
-            P = Pc
-        print(P[:, :d].max(), P[:, :d].min(), P[:, d:].max(), P[:, d:].min())
-        scores = population_evaluation(P[:, :d])
+            P, scores = replacement(Pc, population_evaluation(Pc[:, :d]), mi)
         history[i, :] = scores.copy()
         sigma_history[i, :] = np.mean(P[:, d:], axis=0)
-    return (history, sigma_history)
+    return {'costs': history, 'sigmas': sigma_history}
