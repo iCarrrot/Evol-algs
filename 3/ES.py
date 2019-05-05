@@ -62,7 +62,7 @@ def ES(mi, Lambda, d, population_evaluation, number_of_iterations, K, plus=True,
                 low=1,
                 high=domain[1] * 3 / 4,
                 size=(mi, d)
-            ) * 10
+            )
         )
     )
 
